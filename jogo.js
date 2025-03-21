@@ -14,6 +14,7 @@ class Jogo extends Phaser.Scene {
         this.score = 0; // Pontuação atual
         this.scoreText; // Texto para exibir a pontuação
         this.isOnGroundOrCeiling = false; // Verifica se o cubo está no chão ou no teto
+        this.touchActive = false; // Verifica se o toque está ativo
     }
 
     preload() {
@@ -71,6 +72,15 @@ class Jogo extends Phaser.Scene {
             callbackScope: this,
             loop: true
         });
+
+        // Adiciona suporte a toque
+        this.input.on('pointerdown', () => {
+            this.touchActive = true;
+        });
+
+        this.input.on('pointerup', () => {
+            this.touchActive = false;
+        });
     }
 
     update() {
@@ -88,8 +98,8 @@ class Jogo extends Phaser.Scene {
             }
         });
 
-        // Controle do cubo com o espaço (salto)
-        if (this.teclado.space.isDown) {
+        // Controle do cubo com o espaço (salto) ou toque
+        if (this.teclado.space.isDown || this.touchActive) {
             this.cubo.setVelocityY(-650);
         } else {
             this.cubo.setVelocityY(650);
@@ -144,5 +154,3 @@ class Jogo extends Phaser.Scene {
 }
 
 window.Jogo = Jogo;
-
-// fiz os sprites e grande parte do codigo. tava evitando usar IA, mas o cara da monitoria usou e dps eu continuei usando... acredito que não tenha interferido no meu aprendizado :D

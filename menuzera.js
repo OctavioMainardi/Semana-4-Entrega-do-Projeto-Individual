@@ -4,6 +4,7 @@ class Menu extends Phaser.Scene {
     }
 
     create() {
+  
         // Adiciona o texto "Jogar" no centro da tela e o de baixo (controle)
         const controleText = this.add.text(
             this.cameras.main.width / 2, // Posição X 
